@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    // Gizli kelime ve ayarlar
+    char secret[] = "PROGRAMLAMA";
+    int length = strlen(secret);
+
+    // Kullanıcının bulduğu harfleri tutmak için bir dizi oluşturuyoruz
+    char guessed[length+1]; 
+    for(int i = 0; i < length; i++) {
+        guessed[i] = '_';
+    }
+    guessed[length] = '\0';
+
+    int maxAttempts = 7; // En fazla yanılma sayısı
+    int attempts = 0;    // Şu ana kadar yapılan hatalı tahmin sayısı
+    int correctGuesses = 0; // Doğru bilinen harf sayısı
+    char guess;
+    int found;
+
+    printf("Adam Asmaca Oyununa Hosgeldiniz!\n");
+    printf("Gizli kelime %d harften olusuyor.\n", length);
+
+    while (attempts < maxAttempts && correctGuesses < length) {
+        printf("\nBulunan durum: %s\n", guessed);
+        printf("Bir harf tahmin edin: ");
+        scanf(" %c", &guess);
+
+        // Harfleri büyük harfe çevir
+        guess = toupper((unsigned char)guess);
+
+        // Harf zaten tahmin edildi mi?
+        int alreadyGuessed = 0;
+        for (int i = 0; i < length; i++) {
+            if (guessed[i] == guess) {
+                alreadyGuessed = 1;
+                break;
+            }
+        }
+
+        if (alreadyGuessed) {
+            printf("Bu harfi zaten tahmin ettiniz!\n");
+            continue;
+        }
+
+        // Harf kelimede var mı?
+        found = 0;
+        for (int i = 0; i < length; i++) {
+            if (secret[i] == guess && guessed[i] == '_') {
+                guessed[i] = guess;
+                found = 1;
+                correctGuesses++;
+            }
+        }
+
+        if (!found) {
+            attempts++;
+            printf("Yanlis tahmin! Kalan hak: %d\n", maxAttempts - attempts);
+        } else {
+            printf("Dogru tahmin!\n");
+        }
+    }
+
+    if (correctGuesses == length) {
+        printf("\nTebrikler, kelimeyi buldunuz! Kelime: %s\n", secret);
+    } else {
+        printf("\nHakki tükettiniz! Kelime: %s idi.\n", secret);
+    }
+
+    return 0;
+}
