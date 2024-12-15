@@ -1,0 +1,1 @@
+kopyala yapıştır lavuk
