@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int guess, number, attempts = 0;
+    srand(time(NULL));
+    number = rand() % 100 + 1; // 1 ile 100 arasında rastgele sayı
+
+    printf("1 ile 100 arasinda bir sayi tuttum. Tahmin et!\n");
+
+    while(1) {
+        printf("Tahmininiz: ");
+        scanf("%d", &guess);
+        attempts++;
+
+        if (guess > number) {
+            printf("Daha kucuk bir sayi gir.\n");
+        } else if (guess < number) {
+            printf("Daha buyuk bir sayi gir.\n");
+        } else {
+            printf("Tebrikler! %d denemede bildiniz.\n", attempts);
+            break;
+        }
+    }
+
+    return 0;
+}
